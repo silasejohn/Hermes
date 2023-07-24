@@ -28,8 +28,8 @@ Fundamental Project Setup + Config
  
 ### Added
 
-- [Example Hyperlink Title](url.link.here)
-  Description of Link to Resource
+- Install and Upgrade System Modules (frozen in requirements.txt)
+- Create rudimentary README and CHANGELOG, .gitignore & LICENSE, .env files
  
 ### Changed
   
