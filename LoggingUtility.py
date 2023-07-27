@@ -113,20 +113,12 @@ class Aristotle:
     def assign_handlers_and_formatters(self) -> None:
         # assign appropriate handlers and formatters to the right logging object
         if self._DEFAULT_LOGGING_METHOD == 2:
-            print("Logging to a FILE STREAM...")
             self._FILE_LOGGER_OBJ.addHandler(self._FILE_HANDLER)
-            print("self._FILE_HANDLER 2 is", self._FILE_HANDLER, "and type is", type(self._FILE_HANDLER))
         elif self._DEFAULT_LOGGING_METHOD == 1:
-            print("Logging to a CONSOLE STREAM...")
             self._CONSOLE_LOGGER_OBJ.addHandler(self._STDOUT_HANDLER)
-            print("self._STDOUT_HANDLER 2 is", self._STDOUT_HANDLER, "and type is", type(self._STDOUT_HANDLER))
         elif self._DEFAULT_LOGGING_METHOD == 0:
-            print("Logging to a FILE STREAM...")
-            print("Logging to a CONSOLE STREAM...")
             self._FILE_LOGGER_OBJ.addHandler(self._FILE_HANDLER)
             self._CONSOLE_LOGGER_OBJ.addHandler(self._STDOUT_HANDLER)
-            print("self._FILE_HANDLER 2 is", self._FILE_HANDLER, "and type is", type(self._FILE_HANDLER))
-            print("self._STDOUT_HANDLER 2 is", self._STDOUT_HANDLER, "and type is", type(self._STDOUT_HANDLER))
         else:
             pass  # unreachable code
 
@@ -228,14 +220,4 @@ class Aristotle:
 
 
 # TODO:
-# (1) rewrite utility class to a logger class - w/ handler and have options to write to file or stdout or both
-# - maybe some inheritance? base abstract logger class w/ sub logger classes derived and implemented
-# (2) think about incorporating colored text for terminal output
-# (3) rewrite 5 functions into 1 function w/ an added parameter for log level - should writing log messages
-# be a static method?
-# (4) Rewrite all variables into proper names (w/ underscores)
-# (5) Split the logger obj creation for a file and for the console (different handlers), then create a macro static
-# function where you can specify to use the console log or a file log or both at the same time as well as the
-# appropriate log level for both (setting log level needs to be an input - debug if debug option, info otherwise)
-# (6) raise and throw exceptions out of functions if problems could arise instead of doing return codes...
-# https://coralogix.com/blog/python-logging-best-practices-tips/
+# (1) raise and throw exceptions out of functions if problems could arise instead of doing return codes...
