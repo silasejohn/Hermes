@@ -1,6 +1,6 @@
 # This is a test Python script
 import argparse  # to review command line arguments
-from ConfigParserUtility import CustomParser  # to parse config file and pull out configuration values
+from ConfigParserUtility import Poseidon  # to parse config file and pull out configuration values
 from dotenv import load_dotenv  # to import project hidden environment variables
 from LoggingUtility import Aristotle  # to use the utility logging wrapper module
 import os  # access environment variables
@@ -27,7 +27,8 @@ if __name__ == '__main__':
 
     # define some inter-file constants
     PYTHON_FILE_NAME = "test.py"
-    LOGGING_METHOD = 2
+    LOGGING_METHOD = -1
+    # LOGGING_METHOD = 2  # both (0), console (1), file (2)
 
     # specify constants from environment file
     CONFIG_FILE_NAME = os.getenv('CONFIG_FILE_NAME')
@@ -43,6 +44,24 @@ if __name__ == '__main__':
         exit(0)
 
     # config file setup goes here
+    myConfig = Poseidon(CONFIG_FILE_NAME)
+    myConfig.setup_parser()
+    myConfig.print_valid_sections()
+
+    # pull out log values from the config files
+    log_to_file = myConfig.get_bool_config_value(PYTHON_FILE_NAME, "LogToFile")
+    log_to_console = myConfig.get_bool_config_value(PYTHON_FILE_NAME, "LogToConsole")
+
+    # logic to determine logging mode
+    # both (0), console (1), file (2)
+    if log_to_file and log_to_console:
+        LOGGING_METHOD = 0
+    elif log_to_console:
+        LOGGING_METHOD = 1
+    elif log_to_file:
+        LOGGING_METHOD = 2
+    else:
+        pass  # unreachable code
 
     # logging setup
     myLog = Aristotle(__name__, TEST_LOG_FILE_NAME, arg_options_obj.debug, arg_options_obj.clean, LOGGING_METHOD)
@@ -55,7 +74,7 @@ if __name__ == '__main__':
     myLog.restart_log_message(PYTHON_FILE_NAME, PROJECT_VERSION)
 
     # simple function that tests logging all function types (ensure that the correct threshold is set)
-    myLog.test_all_log_message_types()
+    myLog.create_log_event("info", f"LOGGING METHOD: {LOGGING_METHOD}")
 
     # calls default ip function
     rv = find_client_ip_addr('https://httpbin.org/ip')
