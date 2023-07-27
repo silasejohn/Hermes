@@ -1,9 +1,10 @@
 # This is a test Python script
 import argparse  # to review command line arguments
+from ConfigParserUtility import CustomParser  # to parse config file and pull out configuration values
 from dotenv import load_dotenv  # to import project hidden environment variables
+from LoggingUtility import Aristotle  # to use the utility logging wrapper module
 import os  # access environment variables
 import requests  # to identify a client IP_ADDR
-from LoggingUtility import *  # to use the utility logging wrapper module
 
 
 def find_client_ip_addr(url: str) -> int:
@@ -12,49 +13,55 @@ def find_client_ip_addr(url: str) -> int:
     return 0  # successful return indicated by Exit Code 0 (no problems)
 
 
+def setup_argument_parser(test_log_file_name: str) -> argparse.Namespace:  # argparse setup
+    parser = argparse.ArgumentParser(description="[TEST] Simple Python script for testing purposes")
+    parser.add_argument("-d", "--debug", help=f"log debugging information to {test_log_file_name}", action="store_true")
+    parser.add_argument("-v", "--version", help="specifies current program version", action="store_true")
+    parser.add_argument("-c", "--clean", help=f"cleanses {test_log_file_name}", action="store_true")
+    arg_options = parser.parse_args()
+    return arg_options
+
+
 if __name__ == '__main__':
-    load_dotenv()  # load project environment variables
+    load_dotenv()  # load local variables and information
+
+    # define some inter-file constants
+    PYTHON_FILE_NAME = "test.py"
+    LOGGING_METHOD = 2
 
     # specify constants from environment file
+    CONFIG_FILE_NAME = os.getenv('CONFIG_FILE_NAME')
     PROJECT_VERSION = os.getenv('PROJECT_VERSION')
-    # will create log file if it does not previously exists, appends info if previously exists
-    TEST_LOG_FILE_NAME = os.getenv('TEST_LOG_FILE_NAME')
+    TEST_LOG_FILE_NAME = os.getenv('TEST_LOG_FILE_NAME')  # creates log file if it does not previously exist
 
-
-    # argparse setup
-    parser = argparse.ArgumentParser(description="[TEST] Simple Python script to identify IP_ADDR given a URL")
-    parser.add_argument("-d", "--debug", help=f"log debugging information to {TEST_LOG_FILE_NAME}", action="store_true")
-    parser.add_argument("-v", "--version", help="specifies current program version", action="store_true")
-    parser.add_argument("-c", "--clean", help=f"cleanses {TEST_LOG_FILE_NAME}", action="store_true")
-    arg_options = parser.parse_args()
-
-    # configure logging level (based on debug argument)
-    if arg_options.debug:
-        configure_logging(TEST_LOG_FILE_NAME, "debug")  # lowest logging level
-    else:
-        configure_logging(TEST_LOG_FILE_NAME, "info")  # second lowest logging level
-
-    # clean the specified log file (based on clean argument)
-    if arg_options.clean:
-        with open(TEST_LOG_FILE_NAME, 'w') as file:
-            pass
-
-    logging_info("\n\n[NEW PROGRAM IN EXECUTION] ~ ~ ~ ~ ~ ~", True)  # indicate program start in logfile
-    logging_info(f" Version: {PROJECT_VERSION}", True)  # indicate program start in logfile
+    # setup arguments of the python scripting tools
+    arg_options_obj = setup_argument_parser(TEST_LOG_FILE_NAME)
 
     # console output program version (based on version argument)
-    if arg_options.version:
+    if arg_options_obj.version:
         print(f"Current Program Version: {PROJECT_VERSION}")
         exit(0)
 
-    curr_local_time = time.ctime(time.time())
-    logging_info(f" Current Timestamp: [{curr_local_time}] ", True)  # log program start time in logfile
+    # config file setup goes here
+
+    # logging setup
+    myLog = Aristotle(__name__, TEST_LOG_FILE_NAME, arg_options_obj.debug, arg_options_obj.clean, LOGGING_METHOD)
+    myLog.initialize_logger()
+
+    # clean the specified log file (based on clean argument)
+    myLog.clean_log_file()
+
+    # restart log message block to identify the new program run in the specified logging location
+    myLog.restart_log_message(PYTHON_FILE_NAME, PROJECT_VERSION)
+
+    # simple function that tests logging all function types (ensure that the correct threshold is set)
+    myLog.test_all_log_message_types()
 
     # calls default ip function
     rv = find_client_ip_addr('https://httpbin.org/ip')
 
     # exit code logging
     if rv != 0:
-        logging_error(f"Problems detected. Unsuccessful Exit Code {rv} ")
+        myLog.create_log_event("error", f"Problems detected. Unsuccessful Exit Code {rv} ")
     else:
-        logging_info("Client IP Addr successfully identified ")
+        myLog.create_log_event("info", "Client IP Addr successfully identified ")
