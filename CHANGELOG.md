@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.4.0] - 2023-07-27
+Parsing Module Poseidon
+
+### Added 
+- Created a parser module to read .ini setup files
+- capable of displaying all available sections
+- capable of pulling regular string input and boolean input
+- capable of identifying if specific values are in a config file
+
 ## [0.3.0] - 2023-07-27
 Logging Module Aristotle
 
