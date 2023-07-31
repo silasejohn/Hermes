@@ -1,8 +1,8 @@
 import argparse  # for reading + parsing command line args
 from ConfigParserUtility import Poseidon  # to read and parse a script-specific configuration file
 from dotenv import load_dotenv  # to read and store sensitive/critical variables from a local source
+from Hermes import Hermes  # to create and manage customized MQTT clients
 from LoggingUtility import Aristotle  # to enable a customized logging service
-import paho.mqtt.client as mqtt  # to complete mqtt related activities
 import os  # used in conjunction w/ dotenv to pull sensitive info from a local serve
 
 
@@ -74,3 +74,13 @@ if __name__ == '__main__':
                                    f"at threshold of {myLog.get_logging_threshold_str()} "
                                    f"({myLog.get_logging_threshold_int()})")  # log the current LOGGING method
     myLog.create_log_event("info", f"Script Setup Complete")  # log end of script setup
+
+    # [HERMES CLIENT INITIALIZATION]
+    myLog.create_log_event("info", f"Initializing Test Client 1 from Hermes Module")
+    client_sub_one = Hermes("client_sub_one", True, True)
+
+    # loops forever
+    client_sub_one.connect_to_broker_and_loop()
+
+
+

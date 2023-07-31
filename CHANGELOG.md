@@ -5,6 +5,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.6.0] - 2023-07-31
+Simple MQTT Client Update
+
+### Added 
+- New Hermes Class ~> implements a simple MQTT client capable of connecting to any broker given a hostname and port num. 
+- independent logging across different files
+- example implementation of hermes client in example.py
+
+### Changed
+- updated requirements.txt, config.ini files
+
 ## [0.5.0] - 2023-07-31
 QoL Updates, setup for MQTT interceptor script
 
