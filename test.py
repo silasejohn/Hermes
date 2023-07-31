@@ -27,8 +27,7 @@ if __name__ == '__main__':
 
     # define some inter-file constants
     PYTHON_FILE_NAME = "test.py"
-    LOGGING_METHOD = -1
-    # LOGGING_METHOD = 2  # both (0), console (1), file (2)
+    LOGGING_METHOD = -1   # both (0), console (1), file (2)
 
     # specify constants from environment file
     CONFIG_FILE_NAME = os.getenv('CONFIG_FILE_NAME')

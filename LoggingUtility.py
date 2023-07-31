@@ -218,6 +218,23 @@ class Aristotle:
     def get_file_logger_obj(self) -> logging.Logger:
         return self._FILE_LOGGER_OBJ
 
+    def get_logging_threshold_int(self) -> int:
+        # logging.getLevelName(myLog.Level)
+        if self._DEFAULT_LOGGING_METHOD == 2:
+            return self._FILE_LOGGER_OBJ.level
+        elif self._DEFAULT_LOGGING_METHOD == 1:
+            return self._CONSOLE_LOGGER_OBJ.level
+        else:
+            return self._CONSOLE_LOGGER_OBJ.level
+
+    def get_logging_threshold_str(self) -> str:
+        # logging.getLevelName(myLog.Level)
+        if self._DEFAULT_LOGGING_METHOD == 2:
+            return logging.getLevelName(self._FILE_LOGGER_OBJ.level)
+        elif self._DEFAULT_LOGGING_METHOD == 1:
+            return logging.getLevelName(self._CONSOLE_LOGGER_OBJ.level)
+        else:  # default_logging_method == 0
+            return logging.getLevelName(self._CONSOLE_LOGGER_OBJ.level)
 
 # TODO:
 # (1) raise and throw exceptions out of functions if problems could arise instead of doing return codes...

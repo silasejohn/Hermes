@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.5.0] - 2023-07-31
+QoL Updates, setup for MQTT interceptor script
+
+### Added 
+- refined test script into example.py (organization and modularization of responsibilities)
+- methods to grab logging threshold as strings or integer
+- logic behind how and where a LOGGING_METHOD is defined
+
+### Changed
+- updated config and log directory paths to avoid clutter
+
+### Removed
+- unnecessary print statements, transitioned fully over to logging
+
+
 ## [0.4.0] - 2023-07-27
 Parsing Module Poseidon
 

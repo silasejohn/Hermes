@@ -23,12 +23,12 @@ class Poseidon:  # "parsing" module
                          key_name: str) -> str:
         if section_name in self._CONFIG_OBJ:
             value = self._CONFIG_OBJ[section_name][key_name]
-            print(f"Retrieved value {value} for key {key_name} in section {section_name} "
-                  f"of config_file {self._CONFIG_FILE_NAME}")
+            # print(f"Retrieved value {value} for key {key_name} in section {section_name} "
+            #       f"of config_file {self._CONFIG_FILE_NAME}")
             return value
         else:
-            print(f"NO VALUE FOUND for key {key_name} in section {section_name} "
-                  f"of config_file {self._CONFIG_FILE_NAME}")
+            # print(f"NO VALUE FOUND for key {key_name} in section {section_name} "
+            #       f"of config_file {self._CONFIG_FILE_NAME}")
             return "ERROR!"
 
     def get_bool_config_value(self,
@@ -36,10 +36,10 @@ class Poseidon:  # "parsing" module
                               key_name: str) -> str:
         if section_name in self._CONFIG_OBJ:
             value = self._CONFIG_OBJ.getboolean(section_name, key_name)
-            print(f"Retrieved value {value} for key {key_name} in section {section_name} "
-                  f"of config_file {self._CONFIG_FILE_NAME}")
+            # print(f"Retrieved value {value} for key {key_name} in section {section_name} "
+            #       f"of config_file {self._CONFIG_FILE_NAME}")
             return value
         else:
-            print(f"NO VALUE FOUND for key {key_name} in section {section_name} "
-                  f"of config_file {self._CONFIG_FILE_NAME}")
+            # print(f"NO VALUE FOUND for key {key_name} in section {section_name} "
+            #       f"of config_file {self._CONFIG_FILE_NAME}")
             return "ERROR!"
